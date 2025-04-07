@@ -199,4 +199,8 @@ public class TransactionFormPanel extends JPanel {
             ((MainFrame) parent).refreshTransactions();
         }
     }
+
+    public boolean isCurrentTransaction(int transactionId) {
+        return currentTransaction != null && currentTransaction.getId() == transactionId;
+    }
 }

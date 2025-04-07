@@ -175,15 +175,24 @@ public class MainFrame extends JFrame {
 
             if (confirm == JOptionPane.YES_OPTION) {
                 try {
-                    // Delete transaction and refresh
-                    // This would need to be implemented in your controller
-                    // controller.deleteTransaction(transaction.getId());
+                    // Delete transaction using controller
+                    controller.deleteTransaction(transaction.getId());
+                    Main.getLogger().log("INFO", "Transaction deleted: ID " + transaction.getId());
+
+                    // Clear the form if the deleted transaction was being edited
+                    if (transactionFormPanel.isCurrentTransaction(transaction.getId())) {
+                        transactionFormPanel.setTransaction(null);
+                    }
+
+                    // Refresh the transaction table
+                    refreshTransactions();
+
                     JOptionPane.showMessageDialog(this,
-                            "Diese Funktion ist noch nicht implementiert.",
+                            "Transaktion erfolgreich gelöscht.",
                             "Information",
                             JOptionPane.INFORMATION_MESSAGE);
-                    refreshTransactions();
                 } catch (Exception ex) {
+                    Main.getLogger().log("ERROR", "Failed to delete transaction: " + ex.getMessage());
                     ErrorHandler.showError(this, "Fehler beim Löschen der Transaktion", ex);
                 }
             }

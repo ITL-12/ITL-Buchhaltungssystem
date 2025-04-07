@@ -146,7 +146,7 @@ public class Main {
                 while (columns.next()) {
                     String columnName = columns.getString("COLUMN_NAME");
                     String dataType = columns.getString("TYPE_NAME");
-                    String nullable = columns.getString("IS_NULLABLE").equals("YES") ? "NULL" : "NOT NULL";
+                    String nullable = columns.getString("IS_NULLABLE").equals("Ja") ? "NULL" : "NOT NULL";
                     String key = "";
 
                     // Check if column is a primary key

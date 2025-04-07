@@ -113,6 +113,29 @@ public class AppController {
         }
     }
 
+    public void deleteTransaction(int transactionId) {
+        try {
+            Main.getLogger().log("INFO", "Deleting transaction ID " + transactionId);
+            Connection conn = dbHandler.getConnection();
+
+            String query = "DELETE FROM transactions WHERE id = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, transactionId);
+
+            int rowsAffected = stmt.executeUpdate();
+            stmt.close();
+
+            if (rowsAffected > 0) {
+                Main.getLogger().log("INFO", "Transaction deleted successfully");
+            } else {
+                Main.getLogger().log("WARN", "No rows affected when deleting transaction ID " + transactionId);
+            }
+        } catch (SQLException e) {
+            Main.getLogger().log("ERROR", "Database error deleting transaction: " + e.getMessage());
+            ErrorHandler.showError(null, "Error deleting transaction", e);
+        }
+    }
+
     public void updateTransaction(dev.zanex.mvc.model.Transaction transaction) {
         try {
             Main.getLogger().log("INFO", "Updating transaction ID " + transaction.getId());
